@@ -1,0 +1,35 @@
+PRODUCT (CRUD)
+CATEGORY (R)
+COUPON (CRUD)
+HISTORY|ORDER & DETAIL HISTORY|ORDER (CRD)
+
+HISTORY                 DETAIL HISTORY
+-----------             -------------------
+history_id              detail_history_id
+subtotal                product_id
+payment method          qty
+status                  total
+user_id                 history_id
+
+
+HISTORY (URL ENCODED)
+--------------------
+history_id(AUTO INCREMENT)  | history_invoice | subtotal | payment_method | status  | user_id
+-------------------------------------------------------------------------------------------------
+1                           | CS-01           | 20000    | cash           | 1       | 2
+
+
+DETAIL HISTORY (RAW JSON)
+-------------------
+detail_history_id(AUTO INCREMENT) | product_id  | qty | total | history_id
+-----------------------------------------------------------------------------
+1                                 | 1           | 1   | 5000  | 1
+2                                 | 3           | 3   | 15000 | 1
+
+POST HISTORY YANG SUDAH TERHITUNG SUBTOTAL DI FRONTEND -> POST DETAIL HISTORY
+POST HISTORY KOSONGKAN SUBTOTAL -> POST DETAIL HISTORY -> PATCH HISTORY UPDATE SUBTOTAL
+
+
+Confirm and Pay di klik
+1. 1 endpoint/request = di dalam controller proses yang akan berjalan menyimpan ke dua table langsung, (menghitung total product di backend)
+2. 2 endpoint = akan di buat 2 endpoint => 2 controller. 1 endpoint untuk menyimpan data ke table history, 1 endpoint untuk menyimpan data ke table detail history (menghitung total product di frontend)
